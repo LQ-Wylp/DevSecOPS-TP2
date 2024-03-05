@@ -20,8 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        composer install --no-interaction --prefer-dist
-        composer update --no-interaction --prefer-dist
+        composer update 
 
   test:
     runs-on: ubuntu-latest
