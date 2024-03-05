@@ -42,6 +42,8 @@ class CadeauController extends AbstractController
         {
             $this->entityManager->persist($cadeau);
             $this->entityManager->flush();
+
+            dd($cadeau);
             return $this->redirectToRoute('app_cadeau');
         }
 
