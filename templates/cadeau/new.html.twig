@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cadeau{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prix) }}
+    {{ form_end(form) }}
+
+{% endblock %}

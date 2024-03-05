@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadeau{% endblock %}
+
+{% block body %}
+
+    {% for cadeau in cadeaux %}
+        {{ cadeau.nom }}
+        {{ cadeau.prix }}
+    {% endfor %}
+
+{% endblock %}
