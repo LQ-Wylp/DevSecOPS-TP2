@@ -19,7 +19,7 @@ jobs:
         php-version: 7.4
 
     - name: Install dependencies
-      run: composer install --no-interaction --prefer-dist
+      run: composer update --no-interaction --prefer-dist
 
   test:
     runs-on: ubuntu-latest
