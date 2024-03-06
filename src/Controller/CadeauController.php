@@ -8,6 +8,7 @@ use App\Repository\CadeauRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,23 +33,22 @@ class CadeauController extends AbstractController
     }
 
     #[Route('/cadeau/new', name: 'app_cadeau_new')]
-    public function new(): Response
+    public function new(Request $request): Response
     {
         $cadeau = new Cadeau();
 
         $form = $this->createForm(CadeauType::class, $cadeau);
+        $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($cadeau);
             $this->entityManager->flush();
 
-            dd($cadeau);
             return $this->redirectToRoute('app_cadeau');
         }
 
         return $this->render('cadeau/new.html.twig',[
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 }
