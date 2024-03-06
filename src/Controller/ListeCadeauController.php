@@ -50,4 +50,29 @@ class ListeCadeauController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route('/cadeau/liste/edit/{id}', name: 'app_cadeau_liste_edit')]
+    public function edit(Request $request, ListeCadeau $listeCadeau): Response
+    {
+        $form = $this->createForm(ListeCadeauType::class, $listeCadeau);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_cadeau_liste');
+        }
+
+        return $this->render('liste_cadeau/edit.html.twig',[
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/cadeau/liste/delete/{id}', name: 'app_cadeau_liste_delete')]
+    public function delete(Request $request, ListeCadeau $listeCadeau): Response
+    {
+        $this->entityManager->remove($listeCadeau);
+        $this->entityManager->flush();
+        return $this->redirectToRoute('app_cadeau_liste');
+    }
 }
