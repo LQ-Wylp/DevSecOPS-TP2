@@ -51,4 +51,30 @@ class CadeauController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/cadeau/edit/{id}/{redirect}', name: 'app_cadeau_edit')]
+    public function edit(Request $request, Cadeau $cadeau, string $redirect): Response
+    {
+        $form = $this->createForm(CadeauType::class, $cadeau);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute($redirect);
+        }
+
+        return $this->render('cadeau/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/cadeau/delete/{id}/{redirect}', name: 'app_cadeau_delete')]
+    public function delete(Request $request, Cadeau $cadeau, string $redirect): Response
+    {
+        $this->entityManager->remove($cadeau);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute($redirect);
+    }
 }
