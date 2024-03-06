@@ -38,10 +38,10 @@
 									<td>{{ cadeau.nom }}</td>
 									<td>{{ cadeau.prix }}</td>
 									<td>
-										<a href="#" class="btn btn-warning">
+										<a href="{{ path('app_cadeau_edit', {'id':cadeau.id , 'redirect':'app_cadeau_liste'} )}}" class="btn btn-warning">
 											Modifier
 										</a>
-										<a href="#" class="btn btn-danger">
+										<a href="{{ path('app_cadeau_delete', {'id':cadeau.id, 'redirect':'app_cadeau_liste'})}}" class="btn btn-danger">
 											Supprimer
 										</a>
 									</td>
