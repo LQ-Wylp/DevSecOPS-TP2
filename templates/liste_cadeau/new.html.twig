@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle liste de cadeau{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+        {{ form_row(form.cadeaux) }}
+    {{ form_end(form) }}
+
+{% endblock %}

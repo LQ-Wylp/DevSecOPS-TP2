@@ -2,20 +2,28 @@
 
 namespace App\Form;
 
+use App\Entity\Cadeau;
 use App\Entity\ListeCadeau;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ListeCadeauType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('birthday', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'w-100 rounded-3 py-1 px-2'],
+            ->add('cadeaux', EntityType::class, [
+                'class' => Cadeau::class,
+                'multiple' => true,
+                'choice_label' => function (Cadeau $cadeau) {
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $nom = $accessor->getValue($cadeau, 'nom');
+                    $prix = $accessor->getValue($cadeau, 'prix');
+                    return sprintf('%s - %s', $nom, $prix);
+                },
             ])
         ;
     }
