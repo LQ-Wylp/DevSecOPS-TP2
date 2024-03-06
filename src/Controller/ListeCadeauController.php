@@ -25,9 +25,9 @@ class ListeCadeauController extends AbstractController
     #[Route('/cadeau/liste', name: 'app_cadeau_liste')]
     public function index(): Response
     {
-        $listeCadeau = $this->repoListeCadeau->findAll();
+        $listeCadeaux = $this->repoListeCadeau->findAll();
         return $this->render('liste_cadeau/index.html.twig', [
-            'listeCadeau' => $listeCadeau
+            'listeCadeaux' => $listeCadeaux
         ]);
     }
 

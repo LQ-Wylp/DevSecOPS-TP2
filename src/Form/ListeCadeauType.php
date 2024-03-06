@@ -18,6 +18,7 @@ class ListeCadeauType extends AbstractType
             ->add('cadeaux', EntityType::class, [
                 'class' => Cadeau::class,
                 'multiple' => true,
+                'expanded' => true,
                 'choice_label' => function (Cadeau $cadeau) {
                     $accessor = PropertyAccess::createPropertyAccessor();
                     $nom = $accessor->getValue($cadeau, 'nom');
