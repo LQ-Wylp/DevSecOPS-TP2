@@ -1,0 +1,31 @@
+services:
+
+    mysql:
+        image: mysql:latest
+        environment:
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_DATABASE: db_cadeau
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: db_password
+        networks:
+          - internal_network
+        volumes:
+          - db_data:/var/lib/mysql
+
+    web:
+        depends_on:
+            - mysql
+        build:
+            context: .
+        ports:
+            - "8000:8000"
+        command: ["symfony", "server:start", "--host=0.0.0.0"]
+        networks:
+          - internal_network
+    
+    # Ce connecter à la db du docker 
+    # docker exec -it idConteneur bash
+    # mysql -u db_user -pdb_password db_cadeau
+
+networks:
+  internal_network:
