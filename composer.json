@@ -1,4 +1,6 @@
 {
+    "name": "tp/projet",
+    "description": "Sous Symfony 7.0",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
