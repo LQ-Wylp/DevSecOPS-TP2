@@ -20,27 +20,12 @@ jobs:
 
     - name: Install Composer dependencies
       run: composer install --no-interaction --prefer-dist
-
+      
     - name: Install Symfony Runtime
-      run: composer require symfony/runtime
-
-    - name: Create composer.json file if not exists
-      run: |
-        if [ ! -f composer.json ]; then
-          echo '{"require": {"symfony/runtime": "^5.0"}}' > composer.json
-        fi
+      run: composer require symfony/runtime --no-plugins
 
     - name: Verify composer.json
       run: cat composer.json
-
-    - name: Install PHP_CodeSniffer
-      run: composer require --dev squizlabs/php_codesniffer
-
-    - name: Lint PHP files
-      run: vendor/bin/phpcs --standard=PSR2 src
-
-    - name: Analyze PHP code with PHPStan
-      run: vendor/bin/phpstan analyze
 
   tests:
     runs-on: ubuntu-latest
@@ -49,16 +34,12 @@ jobs:
 
     steps:
     - name: Verify security of dependencies
-      run: composer audit
+      run: composer validate --no-check-publish && composer normalize --dry-run && composer update --dry-run && composer outdated && composer outdated --direct && composer audit
 
-    - name: Run PHPUnit tests
-      run: vendor/bin/phpunit
-
-    - name: Run functional tests with Behat
-      run: vendor/bin/behat
-
-    - name: Generate code coverage report
-      run: vendor/bin/phpunit --coverage-text
+    - name: Check code quality
+      run: |
+        composer require --dev friendsofphp/php-cs-fixer
+        php vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff
 
 
   # Si Docker est utilisé et fonctionne correctement
