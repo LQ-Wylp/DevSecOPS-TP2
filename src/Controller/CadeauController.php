@@ -23,7 +23,7 @@ class CadeauController extends AbstractController
         $this->cadeauRepository = $cadeauRepository;
     }
 
-    #[Route('/cadeau', name: 'app_cadeau')]
+    #[Route('/', name: 'app_cadeau')]
     public function index(): Response
     {
         $cadeaux = $this->cadeauRepository->findAll();
