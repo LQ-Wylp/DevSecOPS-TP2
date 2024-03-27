@@ -1,4 +1,4 @@
-name: Symfony CI/CD
+name: DevSecOps Pipeline
 
 on:
   push:
@@ -16,11 +16,11 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 7.4
+        php-version: 8.2
 
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist
-      
+
   test:
     runs-on: ubuntu-latest
 
@@ -33,7 +33,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 7.4
+        php-version: 8.2
 
     - name: Create database
       run: php bin/console doctrine:database:create --env=test
@@ -41,13 +41,15 @@ jobs:
     - name: Run database migrations
       run: php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
-    # - name: Load fixtures
-    #   run: php bin/console doctrine:fixtures:load --env=test --no-interaction
-
-    # - name: Run tests
-    #   run: php bin/phpunit
-
     - name: Check code quality
       run: |
         composer require --dev friendsofphp/php-cs-fixer
         vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff
+
+    - name: Security check dependencies
+      run: |
+        composer require --dev roave/security-advisories
+        composer validate --strict
+
+    # - name: Security check Docker images
+    #   run: |
