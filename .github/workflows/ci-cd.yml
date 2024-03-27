@@ -22,7 +22,7 @@ jobs:
       run: composer install --no-interaction --prefer-dist
       
     - name: Install Symfony Runtime
-      run: composer require symfony/runtime
+      run: composer require symfony/runtime --no-plugins
 
     - name: Create composer.json file if not exists
       run: |
