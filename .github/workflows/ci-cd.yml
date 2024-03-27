@@ -24,6 +24,12 @@ jobs:
     - name: Install Symfony Runtime
       run: composer require symfony/runtime
 
+    - name: Create composer.json file if not exists
+      run: |
+        if [ ! -f composer.json ]; then
+          echo '{"require": {"symfony/runtime": "^5.0"}}' > composer.json
+        fi
+
   tests:
     runs-on: ubuntu-latest
 
@@ -49,4 +55,3 @@ jobs:
 
     - name: Create database and run migrations
       run: docker-compose up -d --build && docker-compose exec -T web php bin/console doctrine:migrations:migrate --no-interaction
-
