@@ -51,7 +51,7 @@ jobs:
 
     - name: Check code quality
       run: |
-        composer require --dev friendsofphp/php-cs-fixer
+        composer require --dev friendsofphp/php-cs-fixer:^3.0
         php vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff
 
   docker:
@@ -62,13 +62,15 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
-        
+
   # Si Docker est utilisé et fonctionne correctement
     # - name: Build and push Docker image
     #   run: |
     #     docker-compose build
     #     docker-compose push
+
     # - name: Verify Docker image security
     #   run: docker scan image-name
+
     # - name: Create database and run migrations
     #   run: docker-compose up -d --build && docker-compose exec -T web php bin/console doctrine:migrations:migrate --no-interaction 
